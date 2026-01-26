@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VisionGuard - Accessible Obstacle Detection</title>
+    <style>
+        :root {
+            --bg-color: #000000;
+            --text-color: #FFFFFF;
+            --accent-color: #FFD700; /* High contrast yellow */
+            --button-hover: #e6c200;
+            --card-bg: #1a1a1a;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            line-height: 1.6;
+            font-size: 1.2rem; /* Larger base font for readability */
+        }
+
+        /* Navigation */
+        nav {
+            background: #111;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-around;
+            border-bottom: 2px solid var(--accent-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav button {
+            background: none;
+            border: 2px solid transparent;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            font-size: 1.1rem;
+        }
+
+        nav button:focus, nav button:hover {
+            border-bottom: 2px solid var(--accent-color);
+            outline: 3px solid var(--accent-color);
+        }
+
+        /* Layout Containers */
+        .page {
+            display: none;
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Forms & Inputs */
+        .form-group { margin-bottom: 1.5rem; }
+        
+        label { display: block; margin-bottom: 0.5rem; font-weight: bold; }
+
+        input {
+            width: 100%;
+            padding: 1rem;
+            background: #222;
+            border: 2px solid #555;
+            color: white;
+            border-radius: 8px;
+            font-size: 1.2rem;
+        }
+
+        input:focus { outline: 3px solid var(--accent-color); }
+
+        .btn {
+            background-color: var(--accent-color);
+            color: black;
+            border: none;
+            padding: 1rem 2rem;
+            font-weight: bold;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        /* Dashboard & Product Cards */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid #333;
+            text-align: center;
+        }
+
+        .price { color: var(--accent-color); font-size: 1.5rem; font-weight: bold; }
+
+        /* Cart Notification */
+        #cart-count {
+            background: red;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 8px;
+            font-size: 0.8rem;
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<nav role="navigation" aria-label="Main Menu">
+    <button onclick="showPage('login')">Login</button>
+    <button onclick="showPage('dashboard')">Dashboard</button>
+    <button onclick="showPage('products')">Shop</button>
+    <button onclick="showPage('cart')">Cart <span id="cart-count">0</span></button>
+</nav>
+
+<section id="login" class="page active">
+    <h1>Welcome to VisionGuard</h1>
+    <p>Please log in to manage your device settings.</p>
+    <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" placeholder="e.g. user@example.com">
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter your password">
+    </div>
+    <button class="btn" onclick="login()">Login to My Account</button>
+</section>
+<section id="dashboard" class="page">
+    <header style="text-align: center; margin-top: 2rem;">
+        <h1 style="font-size: 4rem; color: var(--accent-color); letter-spacing: 8px; margin-bottom: 0;">
+            VISIONA
+        </h1>
+        <p style="font-size: 1.2rem; color: #888; letter-spacing: 2px; text-transform: uppercase; margin-top: 0.5rem; margin-bottom: 3rem;">
+            Independence Through Innovation
+        </p>
+        
+        <div style="background: #111; padding: 3rem; border-radius: 20px; border: 1px solid #333; text-align: left; line-height: 1.8;">
+            <h2 style="color: var(--accent-color); margin-top: 0; font-size: 2rem;">The Visiona Story</h2>
+            <p>
+                <strong>Visiona</strong> was founded on a singular premise: that the world should be accessible to everyone, regardless of sight. We engineer premium sunglasses that blend high-end fashion with cutting-edge obstacle-avoidance technology.
+            </p>
+            <p>
+                By integrating <strong>ultrasonic spatial mapping</strong> and <strong>AI-driven haptic feedback</strong> directly into the frame, Visiona glasses allow users to "feel" their surroundings. As objects approach, the frames provide intuitive vibrations, alerting the wearer to obstacles, elevation changes, and pathways in real-time.
+            </p>
+            <p>
+                We don't just make wearables; we create confidence. With Visiona, we are redefining mobility for the visually impaired community—one step at a time.
+            </p>
+        </div>
+    </header>
+</section>
+
+<section id="products" class="page">
+    <h1 style="text-align: center; color: var(--accent-color); margin-bottom: 2rem;">The Visiona Collection</h1>
+    
+    <div class="grid">
+        <div class="card" style="display: flex; flex-direction: column; align-items: center; padding: 2rem;">
+            <img src="glasses .jpeg" 
+                 alt="Visiona Classic: Sleek black smart sunglasses" 
+                 style="width: 100%; border-radius: 10px; margin-bottom: 1.5rem; border: 1px solid #333;">
+            
+            <h2 style="margin: 10px 0;">Visiona Classic</h2>
+            <p style="font-size: 0.9rem; color: #bbb; min-height: 60px;">
+                Our flagship model featuring dual-lens ultrasonic sensors for wide-angle obstacle detection.
+            </p>
+            
+            <ul style="text-align: left; font-size: 0.85rem; color: var(--accent-color); margin: 1rem 0; padding-left: 20px;">
+                <li>3-Meter Detection Range</li>
+                <li>Whisper-Quiet Haptics</li>
+                <li>12-Hour Battery Life</li>
+            </ul>
+
+            <p class="price">2999.00</p>
+            <button class="btn" onclick="addToCart('Visiona Classic', 299)">Add to Cart</button>
+        </div>
+
+        <div class="card" style="display: flex; flex-direction: column; align-items: center; padding: 2rem;">
+            <img src="prototype.jpeg" 
+                 alt="Visiona Pro: Sport style wrap-around sunglasses" 
+                 style="width: 100%; border-radius: 10px; margin-bottom: 1.5rem; border: 1px solid #333;">
+            
+            <h2 style="margin: 10px 0;">Visiona Pro</h2>
+            <p style="font-size: 0.9rem; color: #bbb; min-height: 60px;">
+                Designed for active users. Includes AI-voice feedback and 360-degree spatial awareness.
+            </p>
+
+            <ul style="text-align: left; font-size: 0.85rem; color: var(--accent-color); margin: 1rem 0; padding-left: 20px;">
+                <li>5-Meter Detection Range</li>
+                <li>Bone Conduction Audio</li>
+                <li>IP67 Water Resistant</li>
+            </ul>
+
+            <p class="price">2449.00</p>
+            <button class="btn" onclick="addToCart('Visiona Pro', 449)">Add to Cart</button>
+        </div>
+    </div>
+</section>
+<section id="cart" class="page">
+    <h1>Your Shopping Cart</h1>
+    <div id="cart-items">
+        <p>Your cart is empty.</p>
+    </div>
+    <hr>
+    <div id="payment-form" style="display:none;">
+        <h3>Secure Checkout</h3>
+        <div class="form-group">
+            <label for="card">Credit Card Number</label>
+            <input type="text" id="card" placeholder="1234 5678 9101 1121">
+        </div>
+        <button class="btn" onclick="processPayment()">Pay Now</button>
+    </div>
+</section>
+
+<script>
+    let cart = [];
+
+    // Navigation logic
+    function showPage(pageId) {
+        // Hide all pages
+        const pages = document.querySelectorAll('.page');
+        pages.forEach(p => p.classList.remove('active'));
+        
+        // Show target page
+        document.getElementById(pageId).classList.add('active');
+        
+        // Voice Feedback (Simulated for Accessibility)
+        speak("Navigated to " + pageId);
+    }
+
+    // Mock Login
+    function login() {
+        alert("Login Successful!");
+        showPage('dashboard');
+    }
+
+    // Cart logic
+    function addToCart(name, price) {
+        cart.push({name, price});
+        updateCartUI();
+        speak(name + " added to cart");
+    }
+
+    function updateCartUI() {
+        const cartCount = document.getElementById('cart-count');
+        const cartItems = document.getElementById('cart-items');
+        const paymentForm = document.getElementById('payment-form');
+        
+        cartCount.innerText = cart.length;
+        
+        if(cart.length > 0) {
+            cartItems.innerHTML = cart.map(item => `
+                <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                    <span>${item.name}</span>
+                    <span>$${item.price}</span>
+                </div>
+            `).join('') + `<strong>Total: $${cart.reduce((sum, i) => sum + i.price, 0)}</strong>`;
+            paymentForm.style.display = 'block';
+        }
+    }
+
+    function processPayment() {
+        alert("Thank you! Your VisionGuard order is on its way.");
+        cart = [];
+        updateCartUI();
+        showPage('dashboard');
+    }
+
+    // Simple Text-to-Speech Accessibility Helper
+    function speak(text) {
+        const msg = new SpeechSynthesisUtterance();
+        msg.text = text;
+        window.speechSynthesis.speak(msg);
+    }
+</script>
+
+</body>
+</html>
